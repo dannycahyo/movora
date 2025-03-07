@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 
 interface MovieCardProps {
   id: number;
@@ -9,74 +9,53 @@ interface MovieCardProps {
   releaseDate: string;
 }
 
-const MovieCard = ({
+export default function MovieCard({
   id,
   title,
   posterPath,
   rating,
   releaseDate,
-}: MovieCardProps) => {
-  // Format date to be more readable
-  const formatDate = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    return new Date(dateString).toLocaleDateString(
-      undefined,
-      options,
-    );
-  };
-
-  // Round rating to one decimal place
-  const formattedRating = Math.round(rating * 10) / 10;
+}: MovieCardProps) {
+  const year = new Date(releaseDate).getFullYear();
 
   return (
-    <Link href={`/movie/${id}`}>
-      <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-full flex flex-col">
-        <div className="relative aspect-[2/3] w-full">
-          <Image
-            src={
-              posterPath
-                ? `https://image.tmdb.org/t/p/w500${posterPath}`
-                : "/placeholder-poster.jpg"
-            }
-            alt={`${title} poster`}
-            fill
-            style={{ objectFit: "cover" }}
-            className="transition-transform duration-300 hover:scale-105"
-          />
-          <div className="absolute top-2 right-2 bg-gray-900 bg-opacity-75 text-white px-2 py-1 rounded-full flex items-center">
+    <Link href={`/movie/${id}`} className="block group">
+      <div className="relative rounded-lg overflow-hidden bg-gray-800">
+        <div className="aspect-[2/3] relative">
+          {posterPath ? (
+            <Image
+              src={`https://image.tmdb.org/t/p/w500${posterPath}`}
+              alt={title}
+              fill
+              sizes="(max-width: 640px) 160px, (max-width: 768px) 180px, 200px"
+              className="object-cover transition-transform group-hover:scale-105"
+              loading="lazy"
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-800 flex items-center justify-center text-gray-600">
+              No Image
+            </div>
+          )}
+
+          <div className="absolute bottom-2 left-2 bg-black/70 rounded-full px-2 py-1 text-xs font-bold flex items-center">
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
+              className="w-3 h-3 text-yellow-400 mr-1"
               fill="currentColor"
-              className="w-4 h-4 text-yellow-400 mr-1"
+              viewBox="0 0 20 20"
             >
-              <path
-                fillRule="evenodd"
-                d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                clipRule="evenodd"
-              />
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
             </svg>
-            {formattedRating}
+            {rating.toFixed(1)}
           </div>
         </div>
+      </div>
 
-        <div className="p-4 flex flex-col flex-grow">
-          <h3 className="font-bold text-lg text-white mb-2 line-clamp-2">
-            {title}
-          </h3>
-          <p className="text-gray-400 text-sm mt-auto">
-            {releaseDate
-              ? formatDate(releaseDate)
-              : "Release date unknown"}
-          </p>
-        </div>
+      <div className="mt-2">
+        <h3 className="text-sm font-medium text-white line-clamp-1 group-hover:text-red-400 transition-colors">
+          {title}
+        </h3>
+        <p className="text-xs text-gray-400">{year}</p>
       </div>
     </Link>
   );
-};
-
-export default MovieCard;
+}
