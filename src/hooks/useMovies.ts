@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { tmdbAPI } from "@/src/utils/tmdb";
 import type { MovieListResponse } from "@/src/types/MovieList";
+import type { DiscoverParams } from "../types/DiscoverParams";
 
 export const movieKeys = {
   all: ["movies"] as const,
@@ -13,6 +14,16 @@ export const movieKeys = {
   similar: (id: number) => [...movieKeys.all, "similar", id] as const,
   search: (query: string, page?: number) =>
     [...movieKeys.all, "search", query, page || 1] as const,
+  discover: (params: DiscoverParams) =>
+    [
+      ...movieKeys.all,
+      "discover",
+      params.year || "all",
+      params.genreId || "all",
+      params.sortBy || "popularity.desc",
+      params.page || 1,
+    ] as const,
+  genres: () => [...movieKeys.all, "genres"] as const,
 };
 
 export const useTrendingMovies = () => {
@@ -54,6 +65,25 @@ export const useSearchMovies = (
       queryFn || (() => tmdbAPI.searchMoviesWithPage(query, page)),
     enabled: query.length > 2,
     staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+};
+
+export const useDiscoverMovies = (
+  params: DiscoverParams,
+  queryFn?: () => Promise<MovieListResponse>,
+) => {
+  return useQuery({
+    queryKey: movieKeys.discover(params),
+    queryFn: queryFn || (() => tmdbAPI.discoverMovies(params)),
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+};
+
+export const useGenres = () => {
+  return useQuery({
+    queryKey: movieKeys.genres(),
+    queryFn: tmdbAPI.getGenres,
+    staleTime: 1000 * 60 * 60 * 24, // 24 hours - genres rarely change
   });
 };
 

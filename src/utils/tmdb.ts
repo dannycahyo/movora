@@ -1,8 +1,10 @@
 import { isServer } from "./environment";
 
+import type { DiscoverParams } from "../types/DiscoverParams";
 import type { MovieListResponse } from "@/src/types/MovieList";
 import type { MovieDetail } from "@/src/types/MovieDetail";
 import type { MovieCredits } from "@/src/types/MovieCredits";
+import type { GenreListResponse } from "@/src/types/GenreList";
 
 export const fetchTMDB = async <T>(endpoint: string): Promise<T> => {
   try {
@@ -77,4 +79,35 @@ export const tmdbAPI = {
         query,
       )}&page=${page}&include_adult=false`,
     ),
+  discoverMovies: (params: DiscoverParams) => {
+    const {
+      year,
+      genreId,
+      sortBy = "popularity.desc",
+      page = 1,
+    } = params;
+
+    const queryParams: Record<string, string> = {
+      language: "en-US",
+      page: String(page),
+      include_adult: "false",
+      sort_by: sortBy,
+    };
+
+    if (year) {
+      queryParams.primary_release_year = year;
+    }
+
+    if (genreId) {
+      queryParams.with_genres = genreId;
+    }
+
+    const queryString = new URLSearchParams(queryParams).toString();
+    return fetchTMDB<MovieListResponse>(
+      `/discover/movie?${queryString}`,
+    );
+  },
+
+  getGenres: () =>
+    fetchTMDB<GenreListResponse>("/genre/movie/list?language=en"),
 };
