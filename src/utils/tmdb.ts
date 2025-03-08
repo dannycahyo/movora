@@ -57,4 +57,16 @@ export const tmdbAPI = {
     ),
   getMovieDetails: (id: number) =>
     fetchTMDB<Movie>(`/movie/${id}?language=en-US`),
+  searchMovies: (query: string) =>
+    fetchTMDB<MovieResponse>(
+      `/search/movie?language=en-US&query=${encodeURIComponent(
+        query,
+      )}&page=1&include_adult=false`,
+    ),
+  searchMoviesWithPage: (query: string, page: number = 1) =>
+    fetchTMDB<MovieResponse>(
+      `/search/movie?language=en-US&query=${encodeURIComponent(
+        query,
+      )}&page=${page}&include_adult=false`,
+    ),
 };
