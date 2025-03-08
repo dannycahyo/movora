@@ -75,11 +75,9 @@ export default function MovieDetailScreen({
       <Header />
 
       <main className="flex-grow">
-        {/* Hero Section */}
         <MovieHero movie={movie} />
 
         <div className="container mx-auto px-4">
-          {/* Cast Section */}
           {isLoadingCredits ? (
             <div className="py-10 flex justify-center">
               <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
@@ -88,13 +86,11 @@ export default function MovieDetailScreen({
             <CastSection cast={credits.cast} />
           ) : null}
 
-          {/* Crew Section */}
           {isLoadingCredits ? null : credits?.crew &&
             credits.crew.length > 0 ? (
             <CrewSection crew={credits.crew} />
           ) : null}
 
-          {/* Similar Movies */}
           {isLoadingSimilar ? (
             <div className="py-10 flex justify-center">
               <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
