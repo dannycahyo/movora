@@ -4,7 +4,7 @@ import Image from "next/image";
 interface MovieCardProps {
   id: number;
   title: string;
-  posterPath: string;
+  posterPath: string | null;
   rating: number;
   releaseDate: string;
 }
