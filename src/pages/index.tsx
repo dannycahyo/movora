@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     await Promise.all([
       queryClient.prefetchQuery({
         queryKey: movieKeys.trending(),
-        queryFn: tmdbAPI.getTrending,
+        queryFn: () => tmdbAPI.getTrending(),
       }),
       queryClient.prefetchQuery({
         queryKey: movieKeys.popular(),
