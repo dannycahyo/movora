@@ -114,7 +114,7 @@ export default function HeroCarousel({
         <>
           <button
             onClick={handlePrev}
-            className="absolute z-10 left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 rounded-full p-3 text-white"
+            className="absolute z-10 left-1 xl:left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 rounded-full p-3 text-white"
             aria-label="Previous slide"
           >
             <svg
@@ -134,7 +134,7 @@ export default function HeroCarousel({
 
           <button
             onClick={handleNext}
-            className="absolute z-10 right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 rounded-full p-3 text-white"
+            className="absolute z-10 right-1 xl:right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 rounded-full p-3 text-white"
             aria-label="Next slide"
           >
             <svg
@@ -155,7 +155,7 @@ export default function HeroCarousel({
       )}
 
       {movies.length > 1 && (
-        <div className="absolute bottom-5 left-0 right-0 z-10 flex justify-center">
+        <div className="absolute bottom-0 md:bottom-5 left-0 right-0 z-10 flex justify-center">
           {movies.map((_, index) => (
             <button
               key={index}
