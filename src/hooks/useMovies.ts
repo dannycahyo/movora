@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { tmdbAPI } from "@/src/utils/tmdb";
-import type { MovieResponse } from "@/src/types/Movie";
+import type { MovieListResponse } from "@/src/types/MovieList";
 
 export const movieKeys = {
   all: ["movies"] as const,
@@ -9,6 +9,8 @@ export const movieKeys = {
   upcoming: () => [...movieKeys.all, "upcoming"] as const,
   topRated: () => [...movieKeys.all, "top-rated"] as const,
   detail: (id: number) => [...movieKeys.all, "detail", id] as const,
+  credits: (id: number) => [...movieKeys.all, "credits", id] as const,
+  similar: (id: number) => [...movieKeys.all, "similar", id] as const,
   search: (query: string, page?: number) =>
     [...movieKeys.all, "search", query, page || 1] as const,
 };
@@ -44,7 +46,7 @@ export const useTopRatedMovies = () => {
 export const useSearchMovies = (
   query: string,
   page: number = 1,
-  queryFn?: () => Promise<MovieResponse>,
+  queryFn?: () => Promise<MovieListResponse>,
 ) => {
   return useQuery({
     queryKey: movieKeys.search(query, page),
@@ -52,5 +54,29 @@ export const useSearchMovies = (
       queryFn || (() => tmdbAPI.searchMoviesWithPage(query, page)),
     enabled: query.length > 2,
     staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+};
+
+export const useMovieDetails = (id: number) => {
+  return useQuery({
+    queryKey: movieKeys.detail(id),
+    queryFn: () => tmdbAPI.getMovieDetails(id),
+    enabled: !!id,
+  });
+};
+
+export const useMovieCredits = (id: number) => {
+  return useQuery({
+    queryKey: movieKeys.credits(id),
+    queryFn: () => tmdbAPI.getMovieCredits(id),
+    enabled: !!id,
+  });
+};
+
+export const useSimilarMovies = (id: number) => {
+  return useQuery({
+    queryKey: movieKeys.similar(id),
+    queryFn: () => tmdbAPI.getSimilarMovies(id),
+    enabled: !!id,
   });
 };

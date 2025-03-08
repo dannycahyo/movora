@@ -2,12 +2,12 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import MovieCard from "@/src/components/card/MovieCard";
 
-import type { Movie } from "@/src/types/Movie";
+import type { MovieList } from "@/src/types/MovieList";
 
 interface MovieRowProps {
   title: string;
   viewAllLink: string;
-  movies: Movie[];
+  movies: MovieList[];
   isLoading?: boolean;
 }
 

@@ -1,6 +1,8 @@
 import { isServer } from "./environment";
 
-import type { Movie, MovieResponse } from "@/src/types/Movie";
+import type { MovieListResponse } from "@/src/types/MovieList";
+import type { MovieDetail } from "@/src/types/MovieDetail";
+import type { MovieCredits } from "@/src/types/MovieCredits";
 
 export const fetchTMDB = async <T>(endpoint: string): Promise<T> => {
   try {
@@ -46,25 +48,31 @@ export const fetchTMDB = async <T>(endpoint: string): Promise<T> => {
 
 export const tmdbAPI = {
   getTrending: () =>
-    fetchTMDB<MovieResponse>("/trending/movie/day?language=en-US"),
+    fetchTMDB<MovieListResponse>(
+      "/trending/movie/day?language=en-US",
+    ),
   getPopular: () =>
-    fetchTMDB<MovieResponse>("/movie/popular?language=en-US&page=1"),
+    fetchTMDB<MovieListResponse>(
+      "/movie/popular?language=en-US&page=1",
+    ),
   getUpcoming: () =>
-    fetchTMDB<MovieResponse>("/movie/upcoming?language=en-US&page=1"),
+    fetchTMDB<MovieListResponse>(
+      "/movie/upcoming?language=en-US&page=1",
+    ),
   getTopRated: () =>
-    fetchTMDB<MovieResponse>(
+    fetchTMDB<MovieListResponse>(
       "/movie/top_rated?language=en-US&page=1",
     ),
   getMovieDetails: (id: number) =>
-    fetchTMDB<Movie>(`/movie/${id}?language=en-US`),
-  searchMovies: (query: string) =>
-    fetchTMDB<MovieResponse>(
-      `/search/movie?language=en-US&query=${encodeURIComponent(
-        query,
-      )}&page=1&include_adult=false`,
+    fetchTMDB<MovieDetail>(`/movie/${id}?language=en-US`),
+  getMovieCredits: (id: number) =>
+    fetchTMDB<MovieCredits>(`/movie/${id}/credits?language=en-US`),
+  getSimilarMovies: (id: number) =>
+    fetchTMDB<MovieListResponse>(
+      `/movie/${id}/similar?language=en-US&page=1`,
     ),
   searchMoviesWithPage: (query: string, page: number = 1) =>
-    fetchTMDB<MovieResponse>(
+    fetchTMDB<MovieListResponse>(
       `/search/movie?language=en-US&query=${encodeURIComponent(
         query,
       )}&page=${page}&include_adult=false`,

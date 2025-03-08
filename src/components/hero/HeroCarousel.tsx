@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import type { Movie } from "@/src/types/Movie";
+import type { MovieList } from "@/src/types/MovieList";
 
 interface HeroCarouselProps {
-  movies: Movie[];
+  movies: MovieList[];
   isLoading?: boolean;
 }
 

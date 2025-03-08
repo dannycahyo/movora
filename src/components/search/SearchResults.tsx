@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import type { Movie } from "@/src/types/Movie";
+import type { MovieList } from "@/src/types/MovieList";
 
 interface SearchResultsProps {
-  results: Movie[];
+  results: MovieList[];
   isLoading: boolean;
   query: string;
-  onResultClick: () => void; // To close the dropdown when a result is clicked
+  onResultClick: () => void;
 }
 
 export default function SearchResults({
