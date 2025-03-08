@@ -46,46 +46,40 @@ const Header = () => {
           Movora
         </Link>
 
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-2 lg:space-x-6 flex-grow justify-center">
           <Link
             href="/"
-            className="hover:text-red-400 transition-colors"
+            className="hover:text-red-400 transition-colors text-sm lg:text-base"
           >
             Home
           </Link>
           <Link
             href="/trending"
-            className="hover:text-red-400 transition-colors"
+            className="hover:text-red-400 transition-colors text-sm lg:text-base"
           >
             Trending
           </Link>
           <Link
             href="/discover"
-            className="hover:text-red-400 transition-colors"
+            className="hover:text-red-400 transition-colors text-sm lg:text-base"
           >
             Discover
           </Link>
           <Link
             href="/tv-shows"
-            className="hover:text-red-400 transition-colors"
+            className="hover:text-red-400 transition-colors text-sm lg:text-base"
           >
             TV Shows
           </Link>
           <Link
             href="/people"
-            className="hover:text-red-400 transition-colors"
+            className="hover:text-red-400 transition-colors text-sm lg:text-base"
           >
             People
           </Link>
-          <Link
-            href="/favorites"
-            className="hover:text-red-400 transition-colors"
-          >
-            Favorites
-          </Link>
         </nav>
 
-        <div className="hidden md:block relative">
+        <div className="hidden md:block relative ml-2">
           <form
             ref={searchFormRef}
             onSubmit={handleSearch}
@@ -97,15 +91,15 @@ const Header = () => {
               value={searchQuery}
               onChange={handleSearchInputChange}
               onFocus={() => setIsSearchFocused(true)}
-              className="px-4 py-1 rounded-l-full bg-gray-800 focus:outline-none focus:ring-1 focus:ring-red-500 text-sm w-64"
+              className="px-4 py-1 rounded-l-full bg-gray-800 focus:outline-none focus:ring-1 focus:ring-red-500 text-sm w-36 md:w-40 lg:w-64 transition-all"
             />
             <button
               type="submit"
-              className="bg-red-500 hover:bg-red-600 px-4 py-1 rounded-r-full transition-colors"
+              className="bg-red-500 hover:bg-red-600 px-2 lg:px-4 py-1 rounded-r-full transition-colors"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="h-4 w-4 lg:h-5 lg:w-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -121,12 +115,14 @@ const Header = () => {
           </form>
 
           {isSearchFocused && debouncedQuery.length > 2 && (
-            <SearchResults
-              results={searchResults?.results || []}
-              isLoading={searchLoading}
-              query={debouncedQuery}
-              onResultClick={closeSearchResults}
-            />
+            <div className="absolute right-0 mt-1 w-full min-w-[250px]">
+              <SearchResults
+                results={searchResults?.results || []}
+                isLoading={searchLoading}
+                query={debouncedQuery}
+                onResultClick={closeSearchResults}
+              />
+            </div>
           )}
         </div>
 
@@ -194,13 +190,6 @@ const Header = () => {
               onClick={toggleMenu}
             >
               People
-            </Link>
-            <Link
-              href="/favorites"
-              className="hover:text-red-400 transition-colors"
-              onClick={toggleMenu}
-            >
-              Favorites
             </Link>
 
             {/* Mobile Search */}
