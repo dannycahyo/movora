@@ -1,9 +1,21 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
+import { useDebounce } from "@/src/hooks/useDebounce";
+import { useSearchMovies } from "@/src/hooks/useMovies";
+import SearchResults from "@/src/components/search/SearchResults";
 
 const Header = () => {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const searchFormRef = useRef<HTMLFormElement>(null);
+
+  const debouncedQuery = useDebounce(searchQuery, 500);
+
+  const { data: searchResults, isLoading: searchLoading } =
+    useSearchMovies(debouncedQuery);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -11,19 +23,29 @@ const Header = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // Implement search functionality here
-    console.log("Searching for:", searchQuery);
+    if (searchQuery.trim().length > 0) {
+      router.push(`/search?query=${encodeURIComponent(searchQuery)}`);
+      setIsSearchFocused(false);
+    }
+  };
+
+  const handleSearchInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const closeSearchResults = () => {
+    setIsSearchFocused(false);
   };
 
   return (
     <header className="bg-gray-900 text-white shadow-lg sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        {/* Logo */}
         <Link href="/" className="text-2xl font-bold text-red-500">
           Movora
         </Link>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
           <Link
             href="/"
@@ -63,15 +85,19 @@ const Header = () => {
           </Link>
         </nav>
 
-        {/* Search Bar */}
-        <div className="hidden md:block">
-          <form onSubmit={handleSearch} className="flex items-center">
+        <div className="hidden md:block relative">
+          <form
+            ref={searchFormRef}
+            onSubmit={handleSearch}
+            className="flex items-center"
+          >
             <input
               type="text"
               placeholder="Search movies..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="px-4 py-1 rounded-l-full bg-gray-800 focus:outline-none focus:ring-1 focus:ring-red-500 text-sm"
+              onChange={handleSearchInputChange}
+              onFocus={() => setIsSearchFocused(true)}
+              className="px-4 py-1 rounded-l-full bg-gray-800 focus:outline-none focus:ring-1 focus:ring-red-500 text-sm w-64"
             />
             <button
               type="submit"
@@ -93,6 +119,15 @@ const Header = () => {
               </svg>
             </button>
           </form>
+
+          {isSearchFocused && debouncedQuery.length > 2 && (
+            <SearchResults
+              results={searchResults?.results || []}
+              isLoading={searchLoading}
+              query={debouncedQuery}
+              onResultClick={closeSearchResults}
+            />
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -171,13 +206,14 @@ const Header = () => {
             {/* Mobile Search */}
             <form
               onSubmit={handleSearch}
-              className="flex items-center mt-2"
+              className="flex items-center mt-2 relative"
             >
               <input
                 type="text"
                 placeholder="Search movies..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={handleSearchInputChange}
+                onFocus={() => setIsSearchFocused(true)}
                 className="px-4 py-1 rounded-l-full bg-gray-700 focus:outline-none focus:ring-1 focus:ring-red-500 flex-grow text-sm"
               />
               <button
@@ -200,6 +236,23 @@ const Header = () => {
                 </svg>
               </button>
             </form>
+
+            {/* Mobile Search Results */}
+            {isSearchFocused &&
+              isMenuOpen &&
+              debouncedQuery.length > 2 && (
+                <div className="mt-2 bg-gray-700 rounded-lg max-h-60 overflow-y-auto">
+                  <SearchResults
+                    results={searchResults?.results || []}
+                    isLoading={searchLoading}
+                    query={debouncedQuery}
+                    onResultClick={() => {
+                      closeSearchResults();
+                      setIsMenuOpen(false);
+                    }}
+                  />
+                </div>
+              )}
           </nav>
         </div>
       )}
