@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useIsMobile } from "@/src/hooks/useIsMobile";
 import type { MovieList } from "@/src/types/MovieList";
 
 interface SearchResultsProps {
@@ -18,6 +19,7 @@ export default function SearchResults({
 }: SearchResultsProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     setVisible(query.length > 2);
@@ -39,6 +41,10 @@ export default function SearchResults({
   }, []);
 
   if (!visible) return null;
+
+  const resultsToShow = isMobile ? 3 : 8;
+  const displayedResults = results.slice(0, resultsToShow);
+  const remainingResults = results.length - resultsToShow;
 
   return (
     <div
@@ -62,7 +68,7 @@ export default function SearchResults({
             Search Results
           </h3>
           <ul className="divide-y divide-gray-700">
-            {results.slice(0, 8).map((movie) => (
+            {displayedResults.map((movie) => (
               <li key={movie.id} className="hover:bg-gray-700">
                 <Link
                   href={`/movie/${movie.id}`}
@@ -110,14 +116,18 @@ export default function SearchResults({
                 </Link>
               </li>
             ))}
-            {results.length > 8 && (
+            {remainingResults > 0 && (
               <li className="text-center py-2 text-sm text-red-500 hover:text-red-400">
                 <Link
                   href={`/search?query=${encodeURIComponent(query)}`}
                   onClick={onResultClick}
                   className="block py-2"
                 >
-                  View all {results.length} results
+                  View all{" "}
+                  {remainingResults > 0
+                    ? `${remainingResults} more of `
+                    : ""}
+                  {results.length} results
                 </Link>
               </li>
             )}
