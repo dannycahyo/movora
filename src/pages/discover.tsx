@@ -49,13 +49,11 @@ export const getServerSideProps: GetServerSideProps = async ({
   const queryClient = createQueryClient();
 
   try {
-    // Prefetch genres
     await queryClient.prefetchQuery({
       queryKey: movieKeys.genres(),
       queryFn: tmdbAPI.getGenres,
     });
 
-    // Prefetch discover movies with filters
     await queryClient.prefetchQuery({
       queryKey: movieKeys.discover({ year, genreId, sortBy, page }),
       queryFn: () =>
