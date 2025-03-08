@@ -46,7 +46,7 @@ const Header = () => {
           Movora
         </Link>
 
-        <nav className="hidden md:flex items-center space-x-2 lg:space-x-6 flex-grow justify-center">
+        <nav className="hidden md:flex items-center space-x-2 lg:space-x-10 flex-grow justify-center">
           <Link
             href="/"
             className="hover:text-red-400 transition-colors text-sm lg:text-base"
@@ -70,12 +70,6 @@ const Header = () => {
             className="hover:text-red-400 transition-colors text-sm lg:text-base"
           >
             TV Shows
-          </Link>
-          <Link
-            href="/people"
-            className="hover:text-red-400 transition-colors text-sm lg:text-base"
-          >
-            People
           </Link>
         </nav>
 
@@ -183,13 +177,6 @@ const Header = () => {
               onClick={toggleMenu}
             >
               TV Shows
-            </Link>
-            <Link
-              href="/people"
-              className="hover:text-red-400 transition-colors"
-              onClick={toggleMenu}
-            >
-              People
             </Link>
 
             {/* Mobile Search */}
