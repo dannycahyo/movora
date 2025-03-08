@@ -5,7 +5,13 @@ import type { DiscoverParams } from "../types/DiscoverParams";
 
 export const movieKeys = {
   all: ["movies"] as const,
-  trending: () => [...movieKeys.all, "trending"] as const,
+  trending: (timeWindow?: string, page?: number) =>
+    [
+      ...movieKeys.all,
+      "trending",
+      timeWindow || "day",
+      page || 1,
+    ] as const,
   popular: () => [...movieKeys.all, "popular"] as const,
   upcoming: () => [...movieKeys.all, "upcoming"] as const,
   topRated: () => [...movieKeys.all, "top-rated"] as const,
@@ -26,10 +32,15 @@ export const movieKeys = {
   genres: () => [...movieKeys.all, "genres"] as const,
 };
 
-export const useTrendingMovies = () => {
+export const useTrendingMovies = (
+  timeWindow: string | undefined = "day",
+  page: number | undefined = 1,
+  queryFn?: () => Promise<MovieListResponse>,
+) => {
   return useQuery({
-    queryKey: movieKeys.trending(),
-    queryFn: tmdbAPI.getTrending,
+    queryKey: movieKeys.trending(timeWindow, page),
+    queryFn: queryFn || (() => tmdbAPI.getTrending(timeWindow, page)),
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 };
 

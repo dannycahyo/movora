@@ -49,10 +49,14 @@ export const fetchTMDB = async <T>(endpoint: string): Promise<T> => {
 };
 
 export const tmdbAPI = {
-  getTrending: () =>
+  getTrending: (
+    timeWindow: string | undefined = "day",
+    page: number | undefined = 1,
+  ) =>
     fetchTMDB<MovieListResponse>(
-      "/trending/movie/day?language=en-US",
+      `/trending/movie/${timeWindow}?language=en-US&page=${page}`,
     ),
+
   getPopular: () =>
     fetchTMDB<MovieListResponse>(
       "/movie/popular?language=en-US&page=1",
