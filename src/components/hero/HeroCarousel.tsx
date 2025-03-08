@@ -20,7 +20,7 @@ export default function HeroCarousel({
       setCurrentIndex((prevIndex) =>
         prevIndex === movies.length - 1 ? 0 : prevIndex + 1,
       );
-    }, 10000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [movies.length]);
 
