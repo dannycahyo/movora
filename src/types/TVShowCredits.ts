@@ -1,32 +1,30 @@
 export interface Cast {
-  adult: boolean;
-  gender: number;
   id: number;
-  known_for_department: string;
   name: string;
-  original_name: string;
-  popularity: number;
-  profile_path: string | null;
   character: string;
+  profile_path: string | null;
   credit_id: string;
   order: number;
-}
-
-export interface Crew {
   adult: boolean;
   gender: number;
-  id: number;
   known_for_department: string;
-  name: string;
   original_name: string;
   popularity: number;
+}
+export interface Crew {
+  id: number;
+  name: string;
+  job: string;
+  department: string;
   profile_path: string | null;
   credit_id: string;
-  department: string;
-  job: string;
+  adult: boolean;
+  gender: number;
+  known_for_department: string;
+  original_name: string;
+  popularity: number;
 }
-
-export interface TVShowCredits {
+export interface TVShowCreditsResponse {
   id: number;
   cast: Cast[];
   crew: Crew[];
