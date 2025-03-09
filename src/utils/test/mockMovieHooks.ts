@@ -77,18 +77,17 @@ export const setupMocksWithData = () => {
   });
 
   mockedHooks.useSearchMovies.mockReturnValue({
-    data: undefined,
+    data: mockMovieData,
     isLoading: false,
+    error: null,
   });
 
-  // Add mock implementation for useDiscoverMovies
   mockedHooks.useDiscoverMovies.mockReturnValue({
     data: mockMovieData,
     isLoading: false,
     error: null,
   });
 
-  // Add mock implementation for useGenres
   mockedHooks.useGenres.mockReturnValue({
     data: {
       genres: [
@@ -101,6 +100,51 @@ export const setupMocksWithData = () => {
     },
     isLoading: false,
     error: null,
+  });
+
+  mockedHooks.useMovieDetails.mockReturnValue({
+    data: {
+      id: 1,
+      title: "Movie Detail",
+      overview: "Movie overview text",
+      backdrop_path: "/backdrop.jpg",
+      poster_path: "/poster.jpg",
+      release_date: "2023-01-01",
+      runtime: 120,
+      genres: [{ id: 28, name: "Action" }],
+      vote_average: 8.5,
+      tagline: "A tagline for the movie",
+    },
+    isLoading: false,
+    isError: false,
+  });
+
+  mockedHooks.useMovieCredits.mockReturnValue({
+    data: {
+      id: 1,
+      cast: [
+        {
+          cast_id: 1,
+          character: "Character 1",
+          name: "Actor 1",
+          profile_path: "/profile1.jpg",
+        },
+      ],
+      crew: [
+        {
+          id: 1,
+          department: "Directing",
+          job: "Director",
+          name: "Director Name",
+        },
+      ],
+    },
+    isLoading: false,
+  });
+
+  mockedHooks.useSimilarMovies.mockReturnValue({
+    data: mockMovieData,
+    isLoading: false,
   });
 
   return mockedHooks;
@@ -129,6 +173,12 @@ export const setupMocksLoading = () => {
     isLoading: true,
   });
 
+  mockedHooks.useSearchMovies.mockReturnValue({
+    data: undefined,
+    isLoading: true,
+    error: null,
+  });
+
   mockedHooks.useDiscoverMovies.mockReturnValue({
     data: undefined,
     isLoading: true,
@@ -147,6 +197,22 @@ export const setupMocksLoading = () => {
     },
     isLoading: false,
     error: null,
+  });
+
+  mockedHooks.useMovieDetails.mockReturnValue({
+    data: undefined,
+    isLoading: true,
+    isError: false,
+  });
+
+  mockedHooks.useMovieCredits.mockReturnValue({
+    data: undefined,
+    isLoading: true,
+  });
+
+  mockedHooks.useSimilarMovies.mockReturnValue({
+    data: undefined,
+    isLoading: true,
   });
 
   return mockedHooks;
@@ -175,7 +241,12 @@ export const setupMocksPartialData = () => {
     isLoading: true,
   });
 
-  // Add useGenres mock for partial data setup too
+  mockedHooks.useSearchMovies.mockReturnValue({
+    data: mockMovieData,
+    isLoading: false,
+    error: null,
+  });
+
   mockedHooks.useGenres.mockReturnValue({
     data: {
       genres: [
@@ -185,6 +256,39 @@ export const setupMocksPartialData = () => {
     },
     isLoading: false,
     error: null,
+  });
+
+  mockedHooks.useMovieDetails.mockReturnValue({
+    data: {
+      id: 1,
+      title: "Movie Detail",
+      overview: "Movie overview text",
+      backdrop_path: "/backdrop.jpg",
+      poster_path: "/poster.jpg",
+      release_date: "2023-01-01",
+      runtime: 120,
+      genres: [{ id: 28, name: "Action" }],
+      vote_average: 8.5,
+    },
+    isLoading: false,
+    isError: false,
+  });
+
+  mockedHooks.useMovieCredits.mockReturnValue({
+    data: {
+      id: 1,
+      cast: [],
+      crew: [],
+    },
+    isLoading: false,
+  });
+
+  mockedHooks.useSimilarMovies.mockReturnValue({
+    data: {
+      ...mockMovieData,
+      results: [],
+    },
+    isLoading: false,
   });
 
   return mockedHooks;
