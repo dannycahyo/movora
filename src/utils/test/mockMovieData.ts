@@ -1,0 +1,41 @@
+import type { MovieListResponse } from "@/src/types/MovieList";
+
+export const mockMovieData: MovieListResponse = {
+  results: [
+    {
+      id: 1,
+      title: "Movie 1",
+      poster_path: "/path1.jpg",
+      backdrop_path: "/backdrop1.jpg",
+      vote_average: 8.5,
+      release_date: "2023-01-15",
+      overview: "This is the overview for Movie 1",
+      adult: false,
+      genre_ids: [28, 12],
+      original_language: "en",
+      original_title: "Movie 1",
+      popularity: 100.5,
+      video: false,
+      vote_count: 1500,
+    },
+    {
+      id: 2,
+      title: "Movie 2",
+      poster_path: "/path2.jpg",
+      backdrop_path: "/backdrop2.jpg",
+      vote_average: 7.5,
+      release_date: "2023-02-20",
+      overview: "This is the overview for Movie 2",
+      adult: false,
+      genre_ids: [14, 28],
+      original_language: "en",
+      original_title: "Movie 2",
+      popularity: 95.2,
+      video: false,
+      vote_count: 1200,
+    },
+  ],
+  page: 1,
+  total_pages: 10,
+  total_results: 20,
+};
