@@ -6,6 +6,12 @@ import {
   clearAllMocks,
 } from "@/src/utils/test/mockMovieHooks";
 import { getMockedMovieHooks } from "@/src/utils/test/mockMovieHooks";
+import {
+  mockMovieDetailsData,
+  mockMovieCreditsData,
+  mockSimilarMoviesData,
+  mockMovieError,
+} from "@/src/utils/test/mockMovieDetailData";
 
 describe("MovieDetailScreen", () => {
   const movieId = 1;
@@ -31,12 +37,11 @@ describe("MovieDetailScreen", () => {
   it("renders error state correctly", () => {
     const mockedHooks = getMockedMovieHooks();
 
-    // Mock error state for useMovieDetails
     mockedHooks.useMovieDetails.mockReturnValue({
       data: undefined,
       isLoading: false,
       isError: true,
-      error: new Error("Failed to load movie"),
+      error: mockMovieError,
     });
 
     render(<MovieDetailScreen movieId={movieId} />);
@@ -57,7 +62,6 @@ describe("MovieDetailScreen", () => {
   it("renders movie not found state correctly", () => {
     const mockedHooks = getMockedMovieHooks();
 
-    // Mock state where data is null/undefined but not loading or error
     mockedHooks.useMovieDetails.mockReturnValue({
       data: undefined,
       isLoading: false,
@@ -81,91 +85,24 @@ describe("MovieDetailScreen", () => {
   it("renders all components with movie data", () => {
     const mockedHooks = getMockedMovieHooks();
 
-    // Mock detailed movie data
     mockedHooks.useMovieDetails.mockReturnValue({
-      data: {
-        id: 1,
-        title: "Test Movie",
-        backdrop_path: "/backdrop.jpg",
-        poster_path: "/poster.jpg",
-        overview: "Test overview",
-        tagline: "Test tagline",
-        release_date: "2023-01-01",
-        runtime: 120,
-        genres: [{ id: 28, name: "Action" }],
-        vote_average: 8.5,
-      },
+      data: mockMovieDetailsData,
       isLoading: false,
       isError: false,
     });
 
-    // Mock credits data
     mockedHooks.useMovieCredits.mockReturnValue({
-      data: {
-        id: 1,
-        cast: [
-          {
-            cast_id: 1,
-            name: "Actor 1",
-            profile_path: "/profile1.jpg",
-            character: "Character 1",
-          },
-          {
-            cast_id: 2,
-            name: "Actor 2",
-            profile_path: "/profile2.jpg",
-            character: "Character 2",
-          },
-        ],
-        crew: [
-          {
-            id: 1,
-            name: "Director",
-            department: "Directing",
-            job: "Director",
-          },
-          {
-            id: 2,
-            name: "Writer",
-            department: "Writing",
-            job: "Screenplay",
-          },
-        ],
-      },
+      data: mockMovieCreditsData,
       isLoading: false,
     });
 
-    // Mock similar movies data
     mockedHooks.useSimilarMovies.mockReturnValue({
-      data: {
-        results: [
-          {
-            id: 2,
-            title: "Similar Movie 1",
-            poster_path: "/similarpath1.jpg",
-            release_date: "2023-02-01",
-            overview: "Overview",
-            backdrop_path: "/backdrop.jpg",
-            vote_average: 7.5,
-            adult: false,
-            genre_ids: [28],
-            original_language: "en",
-            original_title: "Original Title",
-            popularity: 100,
-            video: false,
-            vote_count: 1000,
-          },
-        ],
-        page: 1,
-        total_pages: 1,
-        total_results: 1,
-      },
+      data: mockSimilarMoviesData,
       isLoading: false,
     });
 
     render(<MovieDetailScreen movieId={movieId} />);
 
-    // Check for header and footer
     expect(
       screen.getByTestId("header-container"),
     ).toBeInTheDocument();
@@ -244,18 +181,7 @@ describe("MovieDetailScreen", () => {
 
     // Movie details loaded but credits and similar movies still loading
     mockedHooks.useMovieDetails.mockReturnValue({
-      data: {
-        id: 1,
-        title: "Test Movie",
-        backdrop_path: "/backdrop.jpg",
-        poster_path: "/poster.jpg",
-        overview: "Test overview",
-        tagline: "Test tagline",
-        release_date: "2023-01-01",
-        runtime: 120,
-        genres: [{ id: 28, name: "Action" }],
-        vote_average: 8.5,
-      },
+      data: mockMovieDetailsData,
       isLoading: false,
       isError: false,
     });
@@ -287,17 +213,7 @@ describe("MovieDetailScreen", () => {
 
     // Set up movie details
     mockedHooks.useMovieDetails.mockReturnValue({
-      data: {
-        id: 1,
-        title: "Test Movie",
-        backdrop_path: "/backdrop.jpg",
-        poster_path: "/poster.jpg",
-        overview: "Test overview",
-        release_date: "2023-01-01",
-        runtime: 120,
-        genres: [{ id: 28, name: "Action" }],
-        vote_average: 8.5,
-      },
+      data: mockMovieDetailsData,
       isLoading: false,
       isError: false,
     });
