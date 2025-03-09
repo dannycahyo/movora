@@ -27,7 +27,10 @@ export default function MovieHero({ movie }: MovieHeroProps) {
   };
 
   return (
-    <div className="relative w-full h-[70vh] md:h-[80vh]">
+    <div
+      className="relative w-full h-[70vh] md:h-[80vh]"
+      data-testid="movie-hero"
+    >
       <div className="absolute inset-0 z-0">
         <Image
           src={backdropUrl}
@@ -35,6 +38,7 @@ export default function MovieHero({ movie }: MovieHeroProps) {
           fill
           className="object-cover opacity-30"
           priority
+          data-testid="movie-backdrop"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-transparent"></div>
@@ -49,48 +53,75 @@ export default function MovieHero({ movie }: MovieHeroProps) {
               width={256}
               height={384}
               className="w-full h-full object-cover"
+              data-testid="movie-poster"
             />
           </div>
 
           <div className="flex-1 max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-2">
+            <h1
+              className="text-4xl md:text-5xl font-bold mb-2"
+              data-testid="movie-title"
+            >
               {movie.title} {releaseYear ? `(${releaseYear})` : ""}
             </h1>
 
-            <div className="flex flex-wrap items-center gap-4 mb-4 text-sm md:text-base text-gray-300">
+            <div
+              className="flex flex-wrap items-center gap-4 mb-4 text-sm md:text-base text-gray-300"
+              data-testid="movie-info"
+            >
               {movie.release_date && (
-                <span>
+                <span data-testid="movie-release-date">
                   {new Date(movie.release_date).toLocaleDateString()}
                 </span>
               )}
               {movie.runtime > 0 && (
-                <span>{formatRuntime(movie.runtime)}</span>
+                <span data-testid="movie-runtime">
+                  {formatRuntime(movie.runtime)}
+                </span>
               )}
               {movie.genres && movie.genres.length > 0 && (
-                <span>
+                <span data-testid="movie-genres">
                   {movie.genres.map((g) => g.name).join(", ")}
                 </span>
               )}
             </div>
 
             {movie.tagline && (
-              <p className="text-lg md:text-xl italic text-gray-300 mb-4">
+              <p
+                className="text-lg md:text-xl italic text-gray-300 mb-4"
+                data-testid="movie-tagline"
+              >
                 {movie.tagline}
               </p>
             )}
 
             <div className="mb-6">
-              <h2 className="text-xl font-semibold mb-2">Overview</h2>
-              <p className="text-gray-300">{movie.overview}</p>
+              <h2
+                className="text-xl font-semibold mb-2"
+                data-testid="overview-title"
+              >
+                Overview
+              </h2>
+              <p
+                className="text-gray-300"
+                data-testid="movie-overview"
+              >
+                {movie.overview}
+              </p>
             </div>
 
             <div className="flex items-center gap-2">
-              <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center">
+              <div
+                className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center"
+                data-testid="movie-score"
+              >
                 <span className="font-bold">
                   {Math.round(movie.vote_average * 10)}%
                 </span>
               </div>
-              <span className="text-sm">User Score</span>
+              <span className="text-sm" data-testid="score-label">
+                User Score
+              </span>
             </div>
           </div>
         </div>
