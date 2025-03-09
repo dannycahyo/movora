@@ -54,7 +54,10 @@ export default function Pagination({
   const pages = getPageNumbers();
 
   return (
-    <div className="flex justify-center mt-8">
+    <div
+      className="flex justify-center mt-8"
+      data-testid="pagination-container"
+    >
       <nav aria-label="Pagination" className="inline-flex">
         <button
           onClick={() =>
@@ -67,6 +70,7 @@ export default function Pagination({
                 ? "bg-gray-700 text-gray-400 cursor-not-allowed"
                 : "bg-gray-800 text-white hover:bg-gray-700"
             }`}
+          data-testid="pagination-prev"
         >
           <span className="sr-only">Previous</span>
           <svg
@@ -95,6 +99,7 @@ export default function Pagination({
                     ? "bg-red-600 text-white"
                     : "bg-gray-800 text-white hover:bg-gray-700"
                 }`}
+              data-testid={`pagination-page-${page}`}
             >
               {page}
             </button>
@@ -102,6 +107,7 @@ export default function Pagination({
             <span
               key={`ellipsis-${idx}`}
               className="px-4 py-2 border border-gray-600 border-l-0 bg-gray-800 text-gray-400"
+              data-testid={`pagination-ellipsis-${idx}`}
             >
               {page}
             </span>
@@ -119,6 +125,7 @@ export default function Pagination({
                 ? "bg-gray-700 text-gray-400 cursor-not-allowed"
                 : "bg-gray-800 text-white hover:bg-gray-700"
             }`}
+          data-testid="pagination-next"
         >
           <span className="sr-only">Next</span>
           <svg
