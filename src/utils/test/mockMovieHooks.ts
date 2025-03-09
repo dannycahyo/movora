@@ -81,6 +81,28 @@ export const setupMocksWithData = () => {
     isLoading: false,
   });
 
+  // Add mock implementation for useDiscoverMovies
+  mockedHooks.useDiscoverMovies.mockReturnValue({
+    data: mockMovieData,
+    isLoading: false,
+    error: null,
+  });
+
+  // Add mock implementation for useGenres
+  mockedHooks.useGenres.mockReturnValue({
+    data: {
+      genres: [
+        { id: 28, name: "Action" },
+        { id: 12, name: "Adventure" },
+        { id: 16, name: "Animation" },
+        { id: 35, name: "Comedy" },
+        { id: 80, name: "Crime" },
+      ],
+    },
+    isLoading: false,
+    error: null,
+  });
+
   return mockedHooks;
 };
 
@@ -107,6 +129,26 @@ export const setupMocksLoading = () => {
     isLoading: true,
   });
 
+  mockedHooks.useDiscoverMovies.mockReturnValue({
+    data: undefined,
+    isLoading: true,
+    error: null,
+  });
+
+  mockedHooks.useGenres.mockReturnValue({
+    data: {
+      genres: [
+        { id: 28, name: "Action" },
+        { id: 12, name: "Adventure" },
+        { id: 16, name: "Animation" },
+        { id: 35, name: "Comedy" },
+        { id: 80, name: "Crime" },
+      ],
+    },
+    isLoading: false,
+    error: null,
+  });
+
   return mockedHooks;
 };
 
@@ -131,6 +173,18 @@ export const setupMocksPartialData = () => {
   mockedHooks.useTopRatedMovies.mockReturnValue({
     data: undefined,
     isLoading: true,
+  });
+
+  // Add useGenres mock for partial data setup too
+  mockedHooks.useGenres.mockReturnValue({
+    data: {
+      genres: [
+        { id: 28, name: "Action" },
+        { id: 12, name: "Adventure" },
+      ],
+    },
+    isLoading: false,
+    error: null,
   });
 
   return mockedHooks;
