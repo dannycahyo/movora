@@ -90,10 +90,16 @@ export default function TrendingMoviesScreen({
       <main className="flex-grow container mx-auto px-4 py-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8">
           <div>
-            <h1 className="text-2xl font-bold mb-2">
+            <h1
+              className="text-2xl font-bold mb-2"
+              data-testid="trending-title"
+            >
               Trending Movies
             </h1>
-            <p className="text-gray-400">
+            <p
+              className="text-gray-400"
+              data-testid="trending-subtitle"
+            >
               Popular movies trending{" "}
               {timeWindow === "day" ? "today" : "this week"}
             </p>
@@ -110,6 +116,7 @@ export default function TrendingMoviesScreen({
               value={timeWindow}
               onChange={handleTimeWindowChange}
               className="bg-gray-800 border border-gray-700 text-white rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+              data-testid="time-window-filter"
             >
               {TIME_WINDOW_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -121,7 +128,7 @@ export default function TrendingMoviesScreen({
         </div>
 
         <div className="mt-4 mb-6">
-          <p className="text-gray-400">
+          <p className="text-gray-400" data-testid="movies-count">
             {isLoading
               ? "Loading trending movies..."
               : `Showing ${data?.results?.length || 0} of ${
@@ -132,22 +139,35 @@ export default function TrendingMoviesScreen({
 
         {isLoading ? (
           <div className="flex justify-center my-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-red-500"></div>
+            <div
+              className="animate-spin rounded-full h-12 w-12 border-t-2 border-red-500"
+              data-testid="loading-spinner"
+              role="status"
+            ></div>
           </div>
         ) : error ? (
-          <div className="text-center my-12 text-red-400">
+          <div
+            className="text-center my-12 text-red-400"
+            data-testid="error-message"
+          >
             An error occurred while loading trending movies. Please
             try again later.
           </div>
         ) : movies.length === 0 ? (
-          <div className="text-center my-12">
+          <div
+            className="text-center my-12"
+            data-testid="empty-message"
+          >
             <p className="text-xl mb-4">No trending movies found.</p>
             <p className="text-gray-400">
               Try selecting a different time period.
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
+          <div
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5"
+            data-testid="movies-grid"
+          >
             {movies.map((movie) => (
               <MovieCard
                 key={movie.id}
