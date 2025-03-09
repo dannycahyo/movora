@@ -31,11 +31,14 @@ export default function TVShowDetailScreen({
   if (isLoadingTVShow) {
     return (
       <div className="min-h-screen bg-gray-900 text-white flex flex-col">
-        <Header />
+        <Header data-testid="header-container" />
         <div className="flex-grow flex items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
+          <div
+            data-testid="loading-spinner"
+            className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"
+          ></div>
         </div>
-        <Footer />
+        <Footer data-testid="footer-container" />
       </div>
     );
   }
@@ -43,17 +46,20 @@ export default function TVShowDetailScreen({
   if (isErrorTVShow) {
     return (
       <div className="min-h-screen bg-gray-900 text-white flex flex-col">
-        <Header />
+        <Header data-testid="header-container" />
         <div className="flex-grow flex items-center justify-center flex-col p-4">
-          <h2 className="text-2xl font-bold mb-4">
+          <h2
+            data-testid="error-title"
+            className="text-2xl font-bold mb-4"
+          >
             Error Loading TV Show
           </h2>
-          <p className="text-red-400">
+          <p data-testid="error-message" className="text-red-400">
             {(tvShowError as Error)?.message ||
               "Failed to load TV show details"}
           </p>
         </div>
-        <Footer />
+        <Footer data-testid="footer-container" />
       </div>
     );
   }
@@ -61,18 +67,20 @@ export default function TVShowDetailScreen({
   if (!tvShow) {
     return (
       <div className="min-h-screen bg-gray-900 text-white flex flex-col">
-        <Header />
+        <Header data-testid="header-container" />
         <div className="flex-grow flex items-center justify-center">
-          <p className="text-xl">TV Show not found</p>
+          <p data-testid="not-found-message" className="text-xl">
+            TV Show not found
+          </p>
         </div>
-        <Footer />
+        <Footer data-testid="footer-container" />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col">
-      <Header />
+      <Header data-testid="header-container" />
 
       <main className="flex-grow">
         <TVShowHero tvShow={tvShow} />
@@ -80,7 +88,10 @@ export default function TVShowDetailScreen({
         <div className="container mx-auto px-4">
           {isLoadingCredits ? (
             <div className="py-10 flex justify-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-red-500"></div>
+              <div
+                data-testid="credits-loading"
+                className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-red-500"
+              ></div>
             </div>
           ) : credits?.cast && credits.cast.length > 0 ? (
             <CastSection cast={credits.cast} />
@@ -93,7 +104,10 @@ export default function TVShowDetailScreen({
 
           {isLoadingSimilar ? (
             <div className="py-10 flex justify-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-red-500"></div>
+              <div
+                data-testid="similar-loading"
+                className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-red-500"
+              ></div>
             </div>
           ) : similarTVShows?.results &&
             similarTVShows.results.length > 0 ? (
@@ -102,7 +116,7 @@ export default function TVShowDetailScreen({
         </div>
       </main>
 
-      <Footer />
+      <Footer data-testid="footer-container" />
     </div>
   );
 }
