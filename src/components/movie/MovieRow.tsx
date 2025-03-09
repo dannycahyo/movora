@@ -44,10 +44,20 @@ export default function MovieRow({
   return (
     <div className="mb-10">
       <div className="flex justify-between items-center mb-5">
-        <h2 className="text-2xl font-bold">{title}</h2>
+        <h2
+          className="text-2xl font-bold"
+          data-testid={`row-title-${title
+            .replace(/\s+/g, "-")
+            .toLowerCase()}`}
+        >
+          {title}
+        </h2>
         <Link
           href={viewAllLink}
           className="text-red-500 hover:text-red-400 text-sm font-medium flex items-center"
+          data-testid={`row-view-all-${title
+            .replace(/\s+/g, "-")
+            .toLowerCase()}`}
         >
           View all
           <svg

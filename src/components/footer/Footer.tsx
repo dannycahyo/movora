@@ -4,25 +4,33 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-gray-300 py-6">
+    <footer
+      className="bg-gray-900 text-gray-300 py-6"
+      data-testid="footer-container"
+    >
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center mb-6">
           <div className="mb-4 md:mb-0">
             <Link
               href="/"
               className="text-2xl font-bold text-red-500"
+              data-testid="footer-logo"
             >
               Movora
             </Link>
           </div>
 
-          <div className="flex space-x-4">
+          <div
+            className="flex space-x-4"
+            data-testid="footer-social-links"
+          >
             <Link
               href="https://github.com/dannycahyo"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-300 hover:text-white transition-colors"
               aria-label="GitHub Profile"
+              data-testid="footer-github-link"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -41,6 +49,7 @@ const Footer = () => {
               rel="noopener noreferrer"
               className="text-gray-300 hover:text-white transition-colors"
               aria-label="LinkedIn Profile"
+              data-testid="footer-linkedin-link"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -59,6 +68,7 @@ const Footer = () => {
               rel="noopener noreferrer"
               className="text-gray-300 hover:text-white transition-colors"
               aria-label="GitHub Repository"
+              data-testid="footer-repo-link"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +88,7 @@ const Footer = () => {
         </div>
 
         <div className="text-center">
-          <p className="text-sm">
+          <p className="text-sm" data-testid="footer-copyright">
             &copy; {currentYear} Movora. All rights reserved. |
             Developed by Danny Dwi Cahyono
           </p>

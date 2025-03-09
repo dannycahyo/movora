@@ -40,34 +40,48 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-gray-900 text-white shadow-lg sticky top-0 z-50">
+    <header
+      className="bg-gray-900 text-white shadow-lg sticky top-0 z-50"
+      data-testid="header-container"
+    >
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold text-red-500">
+        <Link
+          href="/"
+          className="text-2xl font-bold text-red-500"
+          data-testid="header-logo"
+        >
           Movora
         </Link>
 
-        <nav className="hidden md:flex items-center space-x-2 lg:space-x-10 flex-grow justify-center">
+        <nav
+          className="hidden md:flex items-center space-x-2 lg:space-x-10 flex-grow justify-center"
+          data-testid="header-nav-desktop"
+        >
           <Link
             href="/"
             className="hover:text-red-400 transition-colors text-sm lg:text-base"
+            data-testid="header-nav-home"
           >
             Home
           </Link>
           <Link
             href="/trending"
             className="hover:text-red-400 transition-colors text-sm lg:text-base"
+            data-testid="header-nav-trending"
           >
             Trending
           </Link>
           <Link
             href="/discover"
             className="hover:text-red-400 transition-colors text-sm lg:text-base"
+            data-testid="header-nav-discover"
           >
             Discover
           </Link>
           <Link
             href="/tv-shows"
             className="hover:text-red-400 transition-colors text-sm lg:text-base"
+            data-testid="header-nav-tv"
           >
             TV Shows
           </Link>
@@ -78,6 +92,7 @@ const Header = () => {
             ref={searchFormRef}
             onSubmit={handleSearch}
             className="flex items-center"
+            data-testid="header-search-form"
           >
             <input
               type="text"
@@ -86,10 +101,12 @@ const Header = () => {
               onChange={handleSearchInputChange}
               onFocus={() => setIsSearchFocused(true)}
               className="px-4 py-1 rounded-l-full bg-gray-800 focus:outline-none focus:ring-1 focus:ring-red-500 text-sm w-36 md:w-40 lg:w-64 transition-all"
+              data-testid="header-search-input"
             />
             <button
               type="submit"
               className="bg-red-500 hover:bg-red-600 px-2 lg:px-4 py-1 rounded-r-full transition-colors"
+              data-testid="header-search-button"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

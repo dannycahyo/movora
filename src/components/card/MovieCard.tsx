@@ -19,7 +19,11 @@ export default function MovieCard({
   const year = new Date(releaseDate).getFullYear();
 
   return (
-    <Link href={`/movie/${id}`} className="block group">
+    <Link
+      href={`/movie/${id}`}
+      className="block group"
+      data-testid={`movie-card-${id}`}
+    >
       <div className="relative rounded-lg overflow-hidden bg-gray-800">
         <div className="aspect-[2/3] relative">
           {posterPath ? (
@@ -30,14 +34,21 @@ export default function MovieCard({
               sizes="(max-width: 640px) 160px, (max-width: 768px) 180px, 200px"
               className="object-cover transition-transform group-hover:scale-105"
               loading="lazy"
+              data-testid={`movie-poster-${id}`}
             />
           ) : (
-            <div className="w-full h-full bg-gray-800 flex items-center justify-center text-gray-600">
+            <div
+              className="w-full h-full bg-gray-800 flex items-center justify-center text-gray-600"
+              data-testid={`movie-no-poster-${id}`}
+            >
               No Image
             </div>
           )}
 
-          <div className="absolute bottom-2 left-2 bg-black/70 rounded-full px-2 py-1 text-xs font-bold flex items-center">
+          <div
+            className="absolute bottom-2 left-2 bg-black/70 rounded-full px-2 py-1 text-xs font-bold flex items-center"
+            data-testid={`movie-rating-${id}`}
+          >
             <svg
               className="w-3 h-3 text-yellow-400 mr-1"
               fill="currentColor"
@@ -51,10 +62,18 @@ export default function MovieCard({
       </div>
 
       <div className="mt-2">
-        <h3 className="text-sm font-medium text-white line-clamp-1 group-hover:text-red-400 transition-colors">
+        <h3
+          className="text-sm font-medium text-white line-clamp-1 group-hover:text-red-400 transition-colors"
+          data-testid={`movie-title-${id}`}
+        >
           {title}
         </h3>
-        <p className="text-xs text-gray-400">{year}</p>
+        <p
+          className="text-xs text-gray-400"
+          data-testid={`movie-year-${id}`}
+        >
+          {year}
+        </p>
       </div>
     </Link>
   );

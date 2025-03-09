@@ -40,7 +40,10 @@ export default function HeroCarousel({
 
   if (isLoading || movies.length === 0) {
     return (
-      <div className="relative h-[60vh] md:h-[70vh] w-full rounded-lg mb-10 bg-gray-800 animate-pulse">
+      <div
+        className="relative h-[60vh] md:h-[70vh] w-full rounded-lg mb-10 bg-gray-800 animate-pulse"
+        data-testid="hero-carousel"
+      >
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent"></div>
         <div className="relative flex flex-col justify-end h-full p-6 md:p-10">
           <div className="max-w-3xl">
@@ -52,6 +55,10 @@ export default function HeroCarousel({
             <div className="h-10 bg-gray-700 rounded w-40"></div>
           </div>
         </div>
+        <span data-testid="hero-loading">Loading</span>
+        <span data-testid="hero-count" style={{ display: "none" }}>
+          0
+        </span>
       </div>
     );
   }
@@ -59,22 +66,32 @@ export default function HeroCarousel({
   const currentMovie = movies[currentIndex];
 
   return (
-    <div className="relative h-[60vh] md:h-[70vh] w-full overflow-hidden rounded-lg mb-10">
+    <div
+      className="relative h-[60vh] md:h-[70vh] w-full overflow-hidden rounded-lg mb-10"
+      data-testid="hero-carousel"
+    >
       <div
         className="absolute inset-0 bg-cover bg-center z-0"
         style={{
           backgroundImage: `url(https://image.tmdb.org/t/p/original${currentMovie.backdrop_path})`,
         }}
+        data-testid={`hero-movie-backdrop-${currentMovie.id}`}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent"></div>
       </div>
 
       <div className="relative z-10 flex flex-col justify-end h-full p-6 md:p-10">
         <div className="max-w-3xl">
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-3">
+          <h1
+            className="text-3xl md:text-5xl font-bold text-white mb-3"
+            data-testid={`hero-movie-title-${currentMovie.id}`}
+          >
             {currentMovie.title}
           </h1>
-          <p className="text-sm md:text-base text-gray-300 mb-2">
+          <p
+            className="text-sm md:text-base text-gray-300 mb-2"
+            data-testid={`hero-movie-date-${currentMovie.id}`}
+          >
             Release Date:{" "}
             {new Date(currentMovie.release_date).toLocaleDateString(
               "en-US",
@@ -85,12 +102,16 @@ export default function HeroCarousel({
               },
             )}
           </p>
-          <p className="text-sm md:text-base text-gray-300 mb-4 line-clamp-3 md:line-clamp-4">
+          <p
+            className="text-sm md:text-base text-gray-300 mb-4 line-clamp-3 md:line-clamp-4"
+            data-testid={`hero-movie-overview-${currentMovie.id}`}
+          >
             {currentMovie.overview}
           </p>
           <Link
             href={`/movie/${currentMovie.id}`}
             className="inline-flex items-center bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-lg font-medium transition"
+            data-testid={`hero-movie-link-${currentMovie.id}`}
           >
             <span>View Details</span>
             <svg
@@ -170,6 +191,22 @@ export default function HeroCarousel({
           ))}
         </div>
       )}
+
+      {/* Hidden elements used for testing purposes */}
+      <span data-testid="hero-loading" style={{ display: "none" }}>
+        Loaded
+      </span>
+      <span data-testid="hero-count" style={{ display: "none" }}>
+        {movies.length}
+      </span>
+
+      <div style={{ display: "none" }}>
+        {movies.map((movie) => (
+          <div key={movie.id} data-testid={`hero-movie-${movie.id}`}>
+            {movie.title}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
