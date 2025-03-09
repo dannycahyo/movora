@@ -11,10 +11,18 @@ export default function SimilarTVShows({
   const displayTVShows = tvShows.slice(0, 12);
 
   return (
-    <div className="py-8 border-t border-gray-800">
-      <h2 className="text-2xl font-bold mb-6">Similar TV Shows</h2>
+    <div
+      data-testid="similar-tvshows-section"
+      className="py-8 border-t border-gray-800"
+    >
+      <h2
+        data-testid="similar-tvshows-title"
+        className="text-2xl font-bold mb-6"
+      >
+        Similar TV Shows
+      </h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5">
-        {displayTVShows.map((tvShow) => (
+        {displayTVShows.map((tvShow, index) => (
           <TVShowCard
             key={tvShow.id}
             id={tvShow.id}
@@ -22,6 +30,7 @@ export default function SimilarTVShows({
             posterPath={tvShow.poster_path || ""}
             rating={tvShow.vote_average}
             firstAirDate={tvShow.first_air_date}
+            data-testid={`similar-tvshow-${index + 1}`}
           />
         ))}
       </div>

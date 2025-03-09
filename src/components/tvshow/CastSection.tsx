@@ -10,10 +10,15 @@ export default function CastSection({ cast }: CastSectionProps) {
   const displayCast = cast.slice(0, 12);
 
   return (
-    <div className="py-10">
-      <h2 className="text-2xl font-bold mb-6">Cast</h2>
+    <div data-testid="cast-section" className="py-10">
+      <h2
+        data-testid="cast-section-title"
+        className="text-2xl font-bold mb-6"
+      >
+        Cast
+      </h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {displayCast.map((person) => (
+        {displayCast.map((person, index) => (
           <div
             key={person.id}
             className="bg-gray-800 rounded-lg overflow-hidden"
@@ -32,8 +37,16 @@ export default function CastSection({ cast }: CastSectionProps) {
               />
             </div>
             <div className="p-3">
-              <h3 className="font-medium text-sm">{person.name}</h3>
-              <p className="text-gray-400 text-xs mt-1">
+              <h3
+                data-testid={`cast-name-${index + 1}`}
+                className="font-medium text-sm"
+              >
+                {person.name}
+              </h3>
+              <p
+                data-testid={`cast-character-${index + 1}`}
+                className="text-gray-400 text-xs mt-1"
+              >
                 {person.character}
               </p>
             </div>

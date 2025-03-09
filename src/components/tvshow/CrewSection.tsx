@@ -60,12 +60,26 @@ export default function CrewSection({ crew }: CrewSectionProps) {
   const importantDepartments = sortedDepartments.slice(0, 4);
 
   return (
-    <div className="py-8 border-t border-gray-800">
-      <h2 className="text-2xl font-bold mb-6">Crew</h2>
+    <div
+      data-testid="crew-section"
+      className="py-8 border-t border-gray-800"
+    >
+      <h2
+        data-testid="crew-section-title"
+        className="text-2xl font-bold mb-6"
+      >
+        Crew
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {importantDepartments.map(([department, departmentCrew]) => (
-          <div key={department}>
-            <h3 className="text-lg font-semibold mb-3">
+          <div
+            data-testid={`crew-department-${department}`}
+            key={department}
+          >
+            <h3
+              data-testid={`crew-department-title-${department}`}
+              className="text-lg font-semibold mb-3"
+            >
               {department}
             </h3>
             <ul className="space-y-2">
@@ -77,8 +91,20 @@ export default function CrewSection({ crew }: CrewSectionProps) {
                     key={`${person.id}-${index}`}
                     className="text-gray-300"
                   >
-                    <span className="font-medium">{person.name}</span>
-                    <span className="text-gray-500 text-sm block">
+                    <span
+                      data-testid={`crew-name-${department}-${
+                        index + 1
+                      }`}
+                      className="font-medium"
+                    >
+                      {person.name}
+                    </span>
+                    <span
+                      data-testid={`crew-job-${department}-${
+                        index + 1
+                      }`}
+                      className="text-gray-500 text-sm block"
+                    >
                       {person.job}
                     </span>
                   </li>

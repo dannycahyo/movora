@@ -68,11 +68,19 @@ export default function TVShowHero({ tvShow }: TVShowHeroProps) {
           </div>
 
           <div className="flex-grow mt-6 md:mt-0">
-            <h1 className="text-3xl font-bold mb-2">{name}</h1>
+            <h1
+              data-testid="tvshow-title"
+              className="text-3xl font-bold mb-2"
+            >
+              {name}
+            </h1>
 
             <div className="flex items-center gap-2 text-sm text-gray-300 mb-4 flex-wrap">
               {first_air_date && (
-                <span className="bg-gray-800 px-2 py-1 rounded">
+                <span
+                  data-testid="tvshow-air-date"
+                  className="bg-gray-800 px-2 py-1 rounded"
+                >
                   {formatReleaseDate(first_air_date)}
                   {last_air_date &&
                     first_air_date !== last_air_date &&
@@ -81,7 +89,10 @@ export default function TVShowHero({ tvShow }: TVShowHeroProps) {
               )}
 
               {vote_average !== undefined && (
-                <span className="bg-gray-800 px-2 py-1 rounded flex items-center gap-1">
+                <span
+                  data-testid="tvshow-rating"
+                  className="bg-gray-800 px-2 py-1 rounded flex items-center gap-1"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -99,26 +110,38 @@ export default function TVShowHero({ tvShow }: TVShowHeroProps) {
               )}
 
               {runtime && (
-                <span className="bg-gray-800 px-2 py-1 rounded">
+                <span
+                  data-testid="tvshow-runtime"
+                  className="bg-gray-800 px-2 py-1 rounded"
+                >
                   {runtime}
                 </span>
               )}
 
               {status && (
-                <span className="bg-gray-800 px-2 py-1 rounded">
+                <span
+                  data-testid="tvshow-status"
+                  className="bg-gray-800 px-2 py-1 rounded"
+                >
                   {status}
                 </span>
               )}
 
               {number_of_seasons && (
-                <span className="bg-gray-800 px-2 py-1 rounded">
+                <span
+                  data-testid="tvshow-seasons"
+                  className="bg-gray-800 px-2 py-1 rounded"
+                >
                   {number_of_seasons}{" "}
                   {number_of_seasons === 1 ? "Season" : "Seasons"}
                 </span>
               )}
 
               {number_of_episodes && (
-                <span className="bg-gray-800 px-2 py-1 rounded">
+                <span
+                  data-testid="tvshow-episodes"
+                  className="bg-gray-800 px-2 py-1 rounded"
+                >
                   {number_of_episodes}{" "}
                   {number_of_episodes === 1 ? "Episode" : "Episodes"}
                 </span>
@@ -130,6 +153,7 @@ export default function TVShowHero({ tvShow }: TVShowHeroProps) {
               {genres?.map((genre) => (
                 <span
                   key={genre.id}
+                  data-testid={`tvshow-genre-${genre.id}`}
                   className="bg-red-900 text-white text-xs px-2 py-1 rounded"
                 >
                   {genre.name}
@@ -139,7 +163,10 @@ export default function TVShowHero({ tvShow }: TVShowHeroProps) {
 
             <div className="mb-6">
               <h2 className="text-lg font-semibold mb-2">Overview</h2>
-              <p className="text-gray-300 leading-relaxed">
+              <p
+                data-testid="tvshow-overview"
+                className="text-gray-300 leading-relaxed"
+              >
                 {overview || "No overview available."}
               </p>
             </div>
@@ -150,12 +177,17 @@ export default function TVShowHero({ tvShow }: TVShowHeroProps) {
                   <h3 className="text-sm font-medium text-gray-400">
                     Created By
                   </h3>
-                  <p className="text-white">{creators}</p>
+                  <p
+                    data-testid="tvshow-creators"
+                    className="text-white"
+                  >
+                    {creators}
+                  </p>
                 </div>
               )}
 
               {networks && networks.length > 0 && (
-                <div>
+                <div data-testid="tvshow-networks">
                   <h3 className="text-sm font-medium text-gray-400">
                     Network
                   </h3>
