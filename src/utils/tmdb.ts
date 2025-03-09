@@ -1,10 +1,14 @@
 import { isServer } from "./environment";
 
 import type { DiscoverParams } from "../types/DiscoverParams";
+import type { TVShowsParams } from "../types/TVShowsParams";
 import type { MovieListResponse } from "@/src/types/MovieList";
 import type { MovieDetail } from "@/src/types/MovieDetail";
 import type { MovieCredits } from "@/src/types/MovieCredits";
 import type { GenreListResponse } from "@/src/types/GenreList";
+import type { TVShowListResponse } from "@/src/types/TVShowList";
+import type { TVShowDetail } from "@/src/types/TVShowDetail";
+import type { TVShowCredits } from "@/src/types/TVShowCredits";
 
 export const fetchTMDB = async <T>(endpoint: string): Promise<T> => {
   try {
@@ -114,4 +118,64 @@ export const tmdbAPI = {
 
   getGenres: () =>
     fetchTMDB<GenreListResponse>("/genre/movie/list?language=en"),
+
+  getTVGenres: () =>
+    fetchTMDB<GenreListResponse>("/genre/tv/list?language=en"),
+
+  getPopularTVShows: () =>
+    fetchTMDB<TVShowListResponse>(
+      "/tv/popular?language=en-US&page=1",
+    ),
+
+  getTopRatedTVShows: () =>
+    fetchTMDB<TVShowListResponse>(
+      "/tv/top_rated?language=en-US&page=1",
+    ),
+
+  searchTVShowsWithPage: (query: string, page: number = 1) =>
+    fetchTMDB<TVShowListResponse>(
+      `/search/tv?language=en-US&query=${encodeURIComponent(
+        query,
+      )}&page=${page}&include_adult=false`,
+    ),
+
+  discoverTVShows: (params: TVShowsParams) => {
+    const {
+      year,
+      genreId,
+      sortBy = "popularity.desc",
+      page = 1,
+    } = params;
+
+    const queryParams: Record<string, string> = {
+      language: "en-US",
+      page: String(page),
+      include_adult: "false",
+      sort_by: sortBy,
+    };
+
+    if (year) {
+      queryParams.first_air_date_year = year;
+    }
+
+    if (genreId) {
+      queryParams.with_genres = genreId;
+    }
+
+    const queryString = new URLSearchParams(queryParams).toString();
+    return fetchTMDB<TVShowListResponse>(
+      `/discover/tv?${queryString}`,
+    );
+  },
+
+  getTVShowDetails: (id: number) =>
+    fetchTMDB<TVShowDetail>(`/tv/${id}?language=en-US`),
+
+  getTVShowCredits: (id: number) =>
+    fetchTMDB<TVShowCredits>(`/tv/${id}/credits?language=en-US`),
+
+  getSimilarTVShows: (id: number) =>
+    fetchTMDB<TVShowListResponse>(
+      `/tv/${id}/similar?language=en-US&page=1`,
+    ),
 };
