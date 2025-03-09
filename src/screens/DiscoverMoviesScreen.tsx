@@ -153,7 +153,12 @@ export default function DiscoverMoviesScreen({
 
       <main className="flex-grow container mx-auto px-4 py-6">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold mb-4">Discover Movies</h1>
+          <h1
+            className="text-2xl font-bold mb-4"
+            data-testid="discover-title"
+          >
+            Discover Movies
+          </h1>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
             <div>
@@ -168,6 +173,7 @@ export default function DiscoverMoviesScreen({
                 value={year}
                 onChange={handleFilterChange("year")}
                 className="bg-gray-800 border border-gray-700 text-white rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                data-testid="year-filter"
               >
                 {YEAR_OPTIONS.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -189,6 +195,7 @@ export default function DiscoverMoviesScreen({
                 value={genreId}
                 onChange={handleFilterChange("genre")}
                 className="bg-gray-800 border border-gray-700 text-white rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                data-testid="genre-filter"
               >
                 {genreOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -210,6 +217,7 @@ export default function DiscoverMoviesScreen({
                 value={sortBy}
                 onChange={handleFilterChange("sort")}
                 className="bg-gray-800 border border-gray-700 text-white rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+                data-testid="sort-filter"
               >
                 {SORT_OPTIONS.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -220,7 +228,10 @@ export default function DiscoverMoviesScreen({
             </div>
           </div>
 
-          <p className="text-gray-400 mt-2">
+          <p
+            className="text-gray-400 mt-2"
+            data-testid="movies-count"
+          >
             {isLoading
               ? "Loading movies..."
               : `Showing ${data?.results?.length || 0} of ${
@@ -230,23 +241,39 @@ export default function DiscoverMoviesScreen({
         </div>
 
         {isLoading ? (
-          <div className="flex justify-center my-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-red-500"></div>
+          <div
+            className="flex justify-center my-12"
+            data-testid="loading-spinner"
+          >
+            <div
+              className="animate-spin rounded-full h-12 w-12 border-t-2 border-red-500"
+              role="status"
+              aria-hidden="true"
+            ></div>
           </div>
         ) : error ? (
-          <div className="text-center my-12 text-red-400">
+          <div
+            className="text-center my-12 text-red-400"
+            data-testid="error-message"
+          >
             An error occurred while loading movies. Please try again
             later.
           </div>
         ) : movies.length === 0 ? (
-          <div className="text-center my-12">
+          <div
+            className="text-center my-12"
+            data-testid="empty-state"
+          >
             <p className="text-xl mb-4">No movies found.</p>
             <p className="text-gray-400">
               Try adjusting your filters to see more results.
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
+          <div
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5"
+            data-testid="movies-grid"
+          >
             {movies.map((movie) => (
               <MovieCard
                 key={movie.id}
