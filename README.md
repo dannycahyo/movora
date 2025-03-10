@@ -1,40 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Movora - Movie and TV Show Information App
 
-## Getting Started
+Movora is a web application that allows users to discover, search, and explore information about movies and TV shows using The Movie Database (TMDB) API.
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Hosted Application](#hosted-application)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Pages](#pages)
+- [Installation](#installation)
+- [Available Scripts](#available-scripts)
+- [Environment Variables](#environment-variables)
+- [Project Structure](#project-structure)
+- [Data Fetching](#data-fetching)
+- [Credits](#credits)
+- [License](#license)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Hosted Application
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+This project is already hosted and can be accessed at [https://movora.vercel.app/](https://movora.vercel.app/).
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Features
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+- Browse trending movies and TV shows
+- Search for specific movies and TV shows
+- Discover movies and TV shows with filtering options (by year, genre, sort order)
+- View detailed information about movies and TV shows
+- See cast and crew information
+- Find similar content recommendations
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech Stack
 
-## Learn More
+- **Next.js 15.2.1**: React framework with server-side rendering
+- **React 19.0.0**: UI library
+- **TypeScript**: Type safety
+- **TanStack React Query**: Data fetching and state management
+- **Tailwind CSS**: Styling
+- **Jest & React Testing Library**: Testing
 
-To learn more about Next.js, take a look at the following resources:
+## Pages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+- **Home** (`/`): Featured, trending, popular, upcoming, and top-rated movies
+- **Search** (`/search`): Search for movies and TV shows
+- **Movie Details** (`/movie/[movieId]`): Detailed information about a specific movie
+- **TV Show Details** (`/tv/[id]`): Detailed information about a specific TV show
+- **Trending** (`/trending`): Browse trending movies with time window filter
+- **Discover** (`/discover`): Discover movies with various filters
+- **TV Shows** (`/tv-shows`): Browse TV shows with filtering options
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Installation
 
-## Deploy on Vercel
+1. Clone the repository:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```
+   git clone https://github.com/dannycahyo/movora.git
+   cd movora
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+2. Install dependencies:
+
+   ```
+   npm install
+   ```
+
+3. Set up environment variables:
+
+   - Copy `.env.example` to `.env.local`:
+     ```
+     cp .env.example .env.local
+     ```
+   - Get your API read access token from [TMDB](https://www.themoviedb.org/settings/api)
+   - Update the token in `.env.local`
+
+4. Run the development server:
+   ```
+   npm run dev
+   ```
+
+## Available Scripts
+
+- `npm run dev`: Starts the development server with Turbopack
+- `npm run test`: Runs tests
+- `npm run test:watch`: Runs tests in watch mode
+- `npm run build`: Builds the application for production
+- `npm run start`: Starts the production server
+
+## Environment Variables
+
+- `BASE_URL`: The base URL for the TMDB API (default: https://api.themoviedb.org/3)
+- `API_READ_ACCESS_TOKEN`: Your TMDB API read access token
+
+## Project Structure
+
+- `/src/pages`: Next.js pages and API routes
+- `/src/screens`: Screen components for each page
+- `/src/components`: Reusable components
+- `/src/hooks`: Custom hooks for data fetching (useMovies, useTVShows)
+- `/src/utils`: Utility functions including TMDB API client
+- `/src/types`: TypeScript types and interfaces
+
+## Data Fetching
+
+The application uses TanStack React Query for data fetching with server-side rendering support. Each page prefetches necessary data using `getServerSideProps` and dehydrates/rehydrates the query client state for optimal performance.
+
+## Credits
+
+This project uses data from [The Movie Database (TMDB) API](https://www.themoviedb.org/documentation/api). It is not endorsed or certified by TMDB.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
