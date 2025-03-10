@@ -101,7 +101,7 @@ This project is already hosted and can be accessed at [https://movora.vercel.app
 
 ## Data Fetching
 
-The application uses TanStack React Query for data fetching with server-side rendering support. Each page prefetches necessary data using `getServerSideProps` and dehydrates/rehydrates the query client state for optimal performance.
+The application uses TanStack React Query for data fetching with server-side rendering support. Each page prefetches necessary data using `getServerSideProps` and `dehydrates`/`rehydrates` the query client state for optimal performance.
 
 ## Credits
 
