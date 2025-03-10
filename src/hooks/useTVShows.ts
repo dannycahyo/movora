@@ -4,7 +4,7 @@ import type { TVShowListResponse } from "@/src/types/TVShowList";
 import type { TVShowsParams } from "@/src/types/TVShowsParams";
 import type { GenreListResponse } from "@/src/types/GenreList";
 import type { TVShowDetail } from "@/src/types/TVShowDetail";
-import type { TVShowCredits } from "@/src/types/TVShowCredits";
+import type { TVShowCreditsResponse } from "@/src/types/TVShowCredits";
 
 export const tvShowsKeys = {
   all: ["tvshows"] as const,
@@ -92,7 +92,7 @@ export const useTVShowDetails = (id: number) => {
 };
 
 export const useTVShowCredits = (id: number) => {
-  return useQuery<TVShowCredits>({
+  return useQuery<TVShowCreditsResponse>({
     queryKey: tvShowsKeys.credits(id),
     queryFn: () => tmdbAPI.getTVShowCredits(id),
     enabled: !!id,

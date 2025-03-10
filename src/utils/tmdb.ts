@@ -8,7 +8,7 @@ import type { MovieCredits } from "@/src/types/MovieCredits";
 import type { GenreListResponse } from "@/src/types/GenreList";
 import type { TVShowListResponse } from "@/src/types/TVShowList";
 import type { TVShowDetail } from "@/src/types/TVShowDetail";
-import type { TVShowCredits } from "@/src/types/TVShowCredits";
+import type { TVShowCreditsResponse } from "@/src/types/TVShowCredits";
 
 export const fetchTMDB = async <T>(endpoint: string): Promise<T> => {
   try {
@@ -172,7 +172,9 @@ export const tmdbAPI = {
     fetchTMDB<TVShowDetail>(`/tv/${id}?language=en-US`),
 
   getTVShowCredits: (id: number) =>
-    fetchTMDB<TVShowCredits>(`/tv/${id}/credits?language=en-US`),
+    fetchTMDB<TVShowCreditsResponse>(
+      `/tv/${id}/credits?language=en-US`,
+    ),
 
   getSimilarTVShows: (id: number) =>
     fetchTMDB<TVShowListResponse>(
